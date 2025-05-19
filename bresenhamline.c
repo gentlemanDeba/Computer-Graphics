@@ -1,4 +1,4 @@
-#include <GL/glut.h>
+#include <GL/freeglut.h>
 #include <stdio.h>
 #include <math.h>
 
@@ -16,51 +16,45 @@ void drawLine(int x0, int y0, int xEnd, int yEnd)
 	int dx = abs(xEnd - x0);
 	int dy = abs(yEnd - y0);
 
-	int sx = (x0 < xEnd) ? 1 : -1;
-	int sy = (y0 < yEnd) ? 1 : -1;
+	printf("Slope: %f\n", (float)dy / dx);
 
-	int err = dx - dy;
+	int p = 2 * dy - dx;
+	int x = x0;
+	int y = y0;
 
-	glColor3f(0.0f, 1.0f, 0.0f);
+	glColor3f(0.416, 0.173, 0.439);
 	glBegin(GL_POINTS);
-
-	while (1) {
-		glVertex2i(x0, y0);
-
-		if (x0 == xEnd && y0 == yEnd)
-			break;
-
-		int e2 = 2 * err;
-		if (e2 > -dy) {
-			err = err - dy;
-			x0 += sx;
+	for (int i = x0; i < xEnd; i++) {
+		if (p < 0) {
+			glVertex2i(x, y);
+			p = p + 2 * dy;
+		} else {
+			glVertex2i(x, y);
+			p = p + 2 * dy - 2 * dx;
+			y = y + 1;
 		}
-		if (e2 < dx) {
-			err = err + dx;
-			y0 += sy;
-		}
+		x = x + 1;
 	}
 	glEnd();
 }
 
 void drawAxes()
 {
-	glColor3f(1.0f, 1.0f, 1.0f);
+	glColor3f(0.941, 0.541, 0.365);
 	glBegin(GL_LINES);
-	glVertex2i(ORTHO_LEFT, 0);
-	glVertex2i(ORTHO_RIGHT, 0);
-	glVertex2i(0, ORTHO_BOTTOM);
-	glVertex2i(0, ORTHO_TOP);
+	glVertex2f(ORTHO_LEFT, 0);
+	glVertex2f(ORTHO_RIGHT, 0);
+	glVertex2f(0, ORTHO_BOTTOM);
+	glVertex2f(0, ORTHO_TOP);
 	glEnd();
 }
 
 void displayFunc()
 {
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	glClearColor(0.976, 0.929, 0.412, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 	drawAxes();
-	drawLine(-10,-25,5,17);
-
+	drawLine(1,1,5,3);
 	glFlush();
 }
 

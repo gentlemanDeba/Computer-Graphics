@@ -1,6 +1,5 @@
 #include <GL/freeglut.h>
 #include <math.h>
-#include <stdio.h>
 
 #define WIN_WIDTH 800
 #define WIN_HEIGHT 600
@@ -29,7 +28,7 @@ void drawLine(int x0, int y0, int xEnd, int yEnd)
 	xInc = (float)dx / (float)steps;
 	yInc = (float)dy / (float)steps;
 
-	glColor3f(1.0f, 0.4f, 0.1f);
+	glColor3f(0.416, 0.173, 0.439);
 	glBegin(GL_POINTS);
 	for (int i = 0; i <= steps; i++) {
 		glVertex2f(roundf(x), roundf(y));
@@ -41,21 +40,21 @@ void drawLine(int x0, int y0, int xEnd, int yEnd)
 
 void drawAxes()
 {
-	glColor3f(0.2f, 0.2f, 0.6f);
+	glColor3f(0.941, 0.541, 0.365);
 	glBegin(GL_LINES);
-	glVertex2i(ORTHO_LEFT, 0);
-	glVertex2i(ORTHO_RIGHT, 0);
-	glVertex2i(0, ORTHO_BOTTOM);
-	glVertex2i(0, ORTHO_TOP);
+	glVertex2f(ORTHO_LEFT, 0);
+	glVertex2f(ORTHO_RIGHT, 0);
+	glVertex2f(0, ORTHO_BOTTOM);
+	glVertex2f(0, ORTHO_TOP);
 	glEnd();
 }
 
 void displayFunc()
 {
-	glClearColor(0.9f, 0.95f, 1.0f, 1.0f);
+	glClearColor(0.976, 0.929, 0.412, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 	drawAxes();
-	drawLine(-30, 25, 30, -25);
+	drawLine(20, -5, -15, 10);
 	glFlush();
 }
 

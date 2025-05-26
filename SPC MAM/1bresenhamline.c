@@ -11,6 +11,8 @@
 #define ORTHO_BOTTOM -(int)(WIN_HEIGHT / POINT_SIZE) / 2
 #define ORTHO_TOP (int)(WIN_HEIGHT / POINT_SIZE) / 2
 
+int xStart, yStart, xEnd, yEnd;
+
 void drawLine(int x0, int y0, int xEnd, int yEnd)
 {
 	int dx = abs(xEnd - x0);
@@ -24,18 +26,21 @@ void drawLine(int x0, int y0, int xEnd, int yEnd)
 	glColor3f(0.0f, 1.0f, 0.0f);
 	glBegin(GL_POINTS);
 
-	while (1) {
+	while (1)
+	{
 		glVertex2i(x0, y0);
 
 		if (x0 == xEnd && y0 == yEnd)
 			break;
 
 		int e2 = 2 * err;
-		if (e2 > -dy) {
+		if (e2 > -dy)
+		{
 			err = err - dy;
 			x0 += sx;
 		}
-		if (e2 < dx) {
+		if (e2 < dx)
+		{
 			err = err + dx;
 			y0 += sy;
 		}
@@ -59,13 +64,16 @@ void displayFunc()
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 	drawAxes();
-	drawLine(-10,-25,5,17);
+	drawLine(xStart, yStart, xEnd, yEnd);
 
 	glFlush();
 }
 
 int main(int argc, char **argv)
 {
+	printf("Enter x0 y0 xEnd yEnd: ");
+	scanf("%d %d %d %d", &xStart, &yStart, &xEnd, &yEnd);
+
 	glutInit(&argc, argv);
 	glutInitWindowSize(WIN_WIDTH, WIN_HEIGHT);
 	glutCreateWindow("Bresenham Line");

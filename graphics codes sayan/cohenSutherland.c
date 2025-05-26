@@ -10,7 +10,8 @@
 #define BOTTOM 0b0100
 #define TOP 0b1000
 
-typedef struct Point {
+typedef struct Point
+{
 	float x, y;
 } Point;
 
@@ -45,43 +46,59 @@ void cohenSutherland(Point line[], float window[])
 	int codeP2 = generateCode(line[1], window);
 	int acceptLine = 0;
 
-	while (1) {
-		if (accept(codeP1, codeP2)) {
+	while (1)
+	{
+		if (accept(codeP1, codeP2))
+		{
 			acceptLine = 1;
 			break;
-		} else if (reject(codeP1, codeP2)) {
+		}
+		else if (reject(codeP1, codeP2))
+		{
 			break;
-		} else {
+		}
+		else
+		{
 			float slope = (line[1].y - line[0].y) /
-				      (line[1].x - line[0].x);
+						  (line[1].x - line[0].x);
 
 			int codeOuter = codeP1 ? codeP1 : codeP2;
 
 			Point pt;
 
-			if (codeOuter & LEFT) {
+			if (codeOuter & LEFT)
+			{
 				pt.y = slope * (window[0] - line[0].x) +
-				       line[0].y;
+					   line[0].y;
 				pt.x = window[0];
-			} else if (codeOuter & RIGHT) {
+			}
+			else if (codeOuter & RIGHT)
+			{
 				pt.y = slope * (window[1] - line[0].x) +
-				       line[0].y;
+					   line[0].y;
 				pt.x = window[1];
-			} else if (codeOuter & BOTTOM) {
+			}
+			else if (codeOuter & BOTTOM)
+			{
 				pt.x = line[0].x +
-				       (window[3] - line[0].y) / slope;
+					   (window[3] - line[0].y) / slope;
 				pt.y = window[3];
-			} else if (codeOuter & TOP) {
+			}
+			else if (codeOuter & TOP)
+			{
 				pt.x = line[0].x +
-				       (window[4] - line[0].y) / slope;
+					   (window[4] - line[0].y) / slope;
 				pt.y = window[4];
 			}
 
-			if (codeOuter == codeP1) {
+			if (codeOuter == codeP1)
+			{
 				line[0].x = pt.x;
 				line[0].y = pt.y;
 				codeP1 = generateCode(line[0], window);
-			} else {
+			}
+			else
+			{
 				line[1].x = pt.x;
 				line[1].y = pt.y;
 				codeP2 = generateCode(line[1], window);
@@ -89,7 +106,8 @@ void cohenSutherland(Point line[], float window[])
 		}
 	}
 
-	if (acceptLine) {
+	if (acceptLine)
+	{
 		glColor3f(1.0, 1.0, 1.0);
 		glBegin(GL_LINES);
 		glVertex2f(line[0].x, line[0].y);
@@ -102,7 +120,8 @@ void drawPolygon(Point *verts)
 {
 	glColor3f(1.0, 1.0, 1.0);
 	glBegin(GL_LINE_LOOP);
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; i++)
+	{
 		glVertex2f(verts[i].x, verts[i].y);
 	}
 	glEnd();
@@ -121,16 +140,16 @@ void drawAxes()
 
 void displayFunc()
 {
-	float window[4] = { 80.0, 200.0, 80.0, 200.0 };
-	Point verts[4] = { { window[0], window[2] },
-			   { window[1], window[2] },
-			   { window[1], window[3] },
-			   { window[0], window[3] } };
+	float window[4] = {30.0, 70.0, 120.0, 80.0};
+	Point verts[4] = {{window[0], window[2]},
+					  {window[1], window[2]},
+					  {window[1], window[3]},
+					  {window[0], window[3]}};
 
 	glClearColor(0.0, 0.0, 0.0, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	Point line[2] = { { 10.0, 30.0 }, { 240.0, 180.0 } };
+	Point line[2] = {{10.0, 30.0}, {240.0, 180.0}};
 	drawPolygon(verts);
 	cohenSutherland(line, window);
 
@@ -143,7 +162,7 @@ void init()
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluOrtho2D(-WIN_WIDTH / 2, WIN_WIDTH / 2, -WIN_HEIGHT / 2,
-		   WIN_HEIGHT / 2);
+			   WIN_HEIGHT / 2);
 	glMatrixMode(GL_MODELVIEW);
 }
 

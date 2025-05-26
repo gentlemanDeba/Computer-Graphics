@@ -6,7 +6,8 @@
 #define WIN_WIDTH 800
 #define WIN_HEIGHT 600
 
-typedef struct Point {
+typedef struct Point
+{
     float x, y;
 } Point;
 
@@ -15,12 +16,13 @@ const double pi = 3.14159265359;
 int nVerts;
 Point *verts = NULL;
 Point *rotVerts = NULL;
-Point pivot = { 0, 0 };
+Point pivot = {0, 0};
 double theta = 0; // in radians
 
 void rotate(Point verts[], Point rotVerts[], Point pvtPt, int nVerts, double theta)
 {
-    for (int i = 0; i < nVerts; i++) {
+    for (int i = 0; i < nVerts; i++)
+    {
         rotVerts[i].x = pvtPt.x + (verts[i].x - pvtPt.x) * cos(theta) -
                         (verts[i].y - pvtPt.y) * sin(theta);
         rotVerts[i].y = pvtPt.y + (verts[i].x - pvtPt.x) * sin(theta) +
@@ -32,7 +34,8 @@ void drawPolygon(Point *pts, float r, float g, float b)
 {
     glColor3f(r, g, b);
     glBegin(GL_LINE_LOOP);
-    for (int i = 0; i < nVerts; i++) {
+    for (int i = 0; i < nVerts; i++)
+    {
         glVertex2f(pts[i].x, pts[i].y);
     }
     glEnd();
@@ -64,8 +67,8 @@ void displayFunc()
     glClear(GL_COLOR_BUFFER_BIT);
 
     drawAxes();
-    drawPolygon(verts, 0.0f, 1.0f, 1.0f);        // Cyan - original
-    drawPolygon(rotVerts, 1.0f, 0.6f, 0.2f);     // Orange - rotated
+    drawPolygon(verts, 0.0f, 1.0f, 1.0f);    // Cyan - original
+    drawPolygon(rotVerts, 1.0f, 0.6f, 0.2f); // Orange - rotated
     drawPivot(pivot);
 
     glFlush();
@@ -88,7 +91,8 @@ int main(int argc, char **argv)
     rotVerts = (Point *)malloc(sizeof(Point) * nVerts);
 
     printf("Enter coordinates of each vertex (x y):\n");
-    for (int i = 0; i < nVerts; i++) {
+    for (int i = 0; i < nVerts; i++)
+    {
         printf("Vertex %d: ", i + 1);
         scanf("%f %f", &verts[i].x, &verts[i].y);
     }

@@ -5,6 +5,8 @@
 #define WIN_HEIGHT 600
 #define POINT_SIZE 10
 
+int Xc, Yc, Radius;
+
 #define ORTHO_LEFT -(int)(WIN_WIDTH / POINT_SIZE) / 2
 #define ORTHO_RIGHT (int)(WIN_WIDTH / POINT_SIZE) / 2
 #define ORTHO_BOTTOM -(int)(WIN_HEIGHT / POINT_SIZE) / 2
@@ -57,12 +59,15 @@ void displayFunc()
 	glClearColor(0.85f, 0.95f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 	drawAxes();
-	drawCircle(3,6,10);
+	drawCircle(Xc, Yc, Radius);
 	glFlush();
 }
 
 int main(int argc, char **argv)
 {
+	printf("Enter Xc, Yc and Radius: ");
+	scanf("%d %d %d", &Xc, &Yc, &Radius);
+
 	glutInit(&argc, argv);
 	glutInitWindowSize(WIN_WIDTH, WIN_HEIGHT);
 	glutCreateWindow("MidPoint Circle");

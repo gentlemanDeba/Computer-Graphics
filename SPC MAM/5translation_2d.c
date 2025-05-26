@@ -5,7 +5,8 @@
 #define WIN_WIDTH 800
 #define WIN_HEIGHT 600
 
-typedef struct Point {
+typedef struct Point
+{
     float x, y;
 } Point;
 
@@ -16,7 +17,8 @@ float tx = 0, ty = 0;
 
 void translate(Point verts[], Point transVerts[], int nVerts, float tx, float ty)
 {
-    for (int i = 0; i < nVerts; i++) {
+    for (int i = 0; i < nVerts; i++)
+    {
         transVerts[i].x = verts[i].x + tx;
         transVerts[i].y = verts[i].y + ty;
     }
@@ -26,7 +28,8 @@ void drawPolygon(int nVerts, Point *verts, float r, float g, float b)
 {
     glColor3f(r, g, b);
     glBegin(GL_LINE_LOOP);
-    for (int i = 0; i < nVerts; i++) {
+    for (int i = 0; i < nVerts; i++)
+    {
         glVertex2f(verts[i].x, verts[i].y);
     }
     glEnd();
@@ -49,7 +52,7 @@ void displayFunc()
     glClear(GL_COLOR_BUFFER_BIT);
 
     drawAxes();
-    drawPolygon(nVerts, verts, 0.0f, 1.0f, 0.8f);     // Cyan-green (original)
+    drawPolygon(nVerts, verts, 0.0f, 1.0f, 0.8f);      // Cyan-green (original)
     drawPolygon(nVerts, transVerts, 1.0f, 0.6f, 0.2f); // Orange (translated)
 
     glFlush();
@@ -72,7 +75,8 @@ int main(int argc, char **argv)
     transVerts = (Point *)malloc(sizeof(Point) * nVerts);
 
     printf("Enter coordinates of each vertex (x y):\n");
-    for (int i = 0; i < nVerts; i++) {
+    for (int i = 0; i < nVerts; i++)
+    {
         printf("Vertex %d: ", i + 1);
         scanf("%f %f", &verts[i].x, &verts[i].y);
     }

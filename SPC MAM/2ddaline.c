@@ -11,6 +11,8 @@
 #define ORTHO_BOTTOM -(int)(WIN_HEIGHT / POINT_SIZE) / 2
 #define ORTHO_TOP (int)(WIN_HEIGHT / POINT_SIZE) / 2
 
+int xStart, yStart, xEnd, yEnd;
+
 void drawLine(int x0, int y0, int xEnd, int yEnd)
 {
 	float x = x0, y = y0, xInc, yInc;
@@ -20,9 +22,12 @@ void drawLine(int x0, int y0, int xEnd, int yEnd)
 
 	int steps;
 
-	if (abs(dx) > abs(dy)) {
+	if (abs(dx) > abs(dy))
+	{
 		steps = abs(dx);
-	} else {
+	}
+	else
+	{
 		steps = abs(dy);
 	}
 
@@ -31,7 +36,8 @@ void drawLine(int x0, int y0, int xEnd, int yEnd)
 
 	glColor3f(1.0f, 0.4f, 0.1f);
 	glBegin(GL_POINTS);
-	for (int i = 0; i <= steps; i++) {
+	for (int i = 0; i <= steps; i++)
+	{
 		glVertex2f(roundf(x), roundf(y));
 		x = x + xInc;
 		y = y + yInc;
@@ -55,12 +61,15 @@ void displayFunc()
 	glClearColor(0.9f, 0.95f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 	drawAxes();
-	drawLine(-30, 25, 30, -25);
+	drawLine(xStart,yStart,xEnd,yEnd);
 	glFlush();
 }
 
 int main(int argc, char **argv)
 {
+	printf("Enter x0 y0 xEnd yEnd: ");
+	scanf("%d %d %d %d", &xStart, &yStart, &xEnd, &yEnd);
+	
 	glutInit(&argc, argv);
 	glutInitWindowSize(WIN_WIDTH, WIN_HEIGHT);
 	glutCreateWindow("DDA Line");
